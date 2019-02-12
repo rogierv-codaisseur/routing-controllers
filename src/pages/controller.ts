@@ -7,18 +7,20 @@ import {
   Post,
   HttpCode
 } from 'routing-controllers';
-import pagesById, { Page, PageList } from './data';
+// import pagesById, { Page, PageList } from './data';
+import Page from './entity';
 
 @JsonController()
 export default class PageController {
   @Get('/pages/:id')
-  getPage(@Param('id') id: number): Page {
-    return pagesById[id];
+  getPage(@Param('id') id: number) {
+    return Page.findOne(id);
   }
 
   @Get('/pages')
-  allPages(): PageList {
-    return { pages: Object.values(pagesById) };
+  async allPages() {
+    const pages = await Page.find();
+    return { pages };
   }
 
   @Put('/pages/:id')
