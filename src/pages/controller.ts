@@ -6,7 +6,8 @@ import {
   Body,
   Post,
   HttpCode,
-  NotFoundError
+  NotFoundError,
+  Authorized
 } from 'routing-controllers';
 // import pagesById, { Page, PageList } from './data';
 import Page from './entity';
@@ -32,6 +33,7 @@ export default class PageController {
     return Page.merge(page, update).save();
   }
 
+  @Authorized()
   @Post('/pages')
   @HttpCode(201)
   createPage(@Body() page: Page) {
